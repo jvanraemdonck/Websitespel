@@ -1,0 +1,148 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+/**
+ * colors
+ */
+$red: #F9423A;
+$beige: #F1E6B2;
+$grey: #D6D6D6;
+$light-blue: #3EB1C8;
+$light-blue-spec: #4FC2D9;
+$blue: #36474D;
+$blue-shadow: #25363C;
+
+/**
+ * Element Selectors
+ */
+body {
+	background-color: #EEE;
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * ID Selectors
+ */
+
+/**
+ * Class selectors
+ */
+.login {
+	width: 100%;
+	max-width: 400px;
+	margin: 100px auto;
+	margin-top: 20vh;
+}
+
+.btn-login {
+	border: none;
+	height: 83px;
+	padding: 0;
+
+	&.red {
+		background-color: $red;
+	}
+
+	&.green {
+		background-color: $light-blue;
+	}
+}
+
+.top-bar {
+	width: 100%;
+	background-color: $light-blue;
+
+	.title {
+		line-height: 50px;
+		font-weight: bold;
+		width: 200px;
+		display: inline-block;
+		text-align: center;
+
+		border-right: 1px solid $light-blue-spec;
+	}
+
+	.user {
+		margin-right: 0;
+		display: inline-block;
+		float: right;
+		color: $grey;
+		cursor: pointer;
+
+		.news {
+			display: inline-block;
+			position: relative;
+			width: 50px;
+			border-left: 1px solid $light-blue-spec;
+			line-height: 50px;
+			text-align: center;
+
+			transition: color 0.3s linear;
+
+			.number {
+				z-index: 3;
+				display: block;
+				line-height: 1;
+				width: 15px;
+				height: 15px;
+				bottom: 5px;
+				right: 5px;
+				position: absolute;
+				font-size: 8pt;
+			}
+
+			&:hover {
+				color: white;
+			}
+
+			img {
+				width: 40px;
+				height: 40px;
+				margin-right: 10px;
+			}
+		}
+
+		.profile {
+			width: 100px;
+			text-align: left;
+			padding-left: 5px;
+		}
+	}
+}
+
+.left-bar {
+	width: 200px;
+	min-height: 500px;
+	background-color: $blue;
+	color: $grey;
+
+	h4 {
+		margin: 0;
+		font-size: 10pt;
+		padding: 10px;
+		background-color: $blue-shadow;
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+
+		li  {
+			list-style-type: none;
+
+			a {
+				display: inline-block;
+				text-decoration: none;
+				padding: 10px 10px 10px 20px;
+				width: 100%;
+			}
+		}
+	}
+}
+
+/**
+ * Helpers
+ */
+.center {
+	text-align: center;
+}
