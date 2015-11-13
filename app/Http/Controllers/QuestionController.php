@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Auth;
+use Response;
+use App\Question;
+
 class QuestionController extends Controller
 {
     /**
@@ -14,75 +18,66 @@ class QuestionController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function view(Request $request)
     {
-        $admin = \Auth::user()->admin()->get();
+        $admin = Auth::user()->admin()->get();
         return view('admin.questions.index')->with('admin', $admin);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * return the questions from the database in a paginated structure
+     * 
+     * @param  integer $page page
+     * @return array       questions
      */
-    public function create()
-    {
-        //
+    public function index(Request $request, $page) {
+
+        if (!Auth::check()) {
+            return Response::json(['error' => ['message' => 'not authorized, not logged in']]);
+        } else {
+            if (!Auth::user()->isAdmin()) {
+                return Response::json(['error' => ['message' => 'not authorized, elevated permissions needed']]);
+            }
+        }
+        
+        $recordsPerPage = 10;
+
+        // set the correct page
+        $first = ($page - 1) * $recordsPerPage;
+
+        $questionsCount = Question::count();
+        $totalPages = ceil( $questionsCount / $recordsPerPage );
+
+        // get the questions for that page
+        $questions = Question::orderby('sequence')->skip($first)->take($recordsPerPage)->get();
+
+        // get the number of questions (20 except end of table)
+        $count = count($questions);
+
+        // add the number of answers for each question
+        for ($i = 0; $i < $count; $i++) {
+            $questions[$i]['answersCount'] = $questions[$i]->answersCount();
+        }
+
+        $result = array('questions' => $questions, 'pages' => $totalPages);
+
+        // return the result
+        return $result;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function create(Request $request) {
+        $question = $request->all();
+        $question['sequence'] = count(Question::all());
+        Question::create($question);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function edit(Request $request, $id) {
+        $question = Question::findOrFail($id);
+        $question->question = $request->input('question');
+        $question->question_type = $request->input('question_type');
+        $question->tip_alters_question = $request->input('tip_alters_question');
+        $question->tip = $request->input('tip');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        $question->save();
     }
 }

@@ -3,21 +3,28 @@
 /**
  * colors
  */
-$red: #F9423A;
-$beige: #F1E6B2;
-$grey: #D6D6D6;
-$light-blue: #3EB1C8;
-$light-blue-spec: #4FC2D9;
-$blue: #36474D;
-$blue-shadow: #25363C;
+$red: #E74C3C;
+$beige: #ECF0F1;
+$light-blue: #3498DB;
+$blue: #2980B9;
+$dark-blue: #2C3E50;
+$dark-blue-spec: #3D4F61;
 
 /**
  * Element Selectors
  */
+
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: none;
+}
+
 body {
-	background-color: #EEE;
+	background-color: $beige;
 	margin: 0;
 	padding: 0;
+	font-family: 'Lato', sans-serif;
 }
 
 /**
@@ -27,6 +34,10 @@ body {
 /**
  * Class selectors
  */
+
+/**------------------------------------------------------------**/
+/**-------------------------Login Screen-----------------------**/
+/**------------------------------------------------------------**/
 .login {
 	width: 100%;
 	max-width: 400px;
@@ -44,105 +55,276 @@ body {
 	}
 
 	&.green {
-		background-color: $light-blue;
+		background-color: $blue;
 	}
 }
 
-.top-bar {
+/**------------------------------------------------------------**/
+/**-------------------------Admin Template---------------------**/
+/**------------------------------------------------------------**/
+
+.top-left {
 	width: 100%;
-	background-color: $light-blue;
+	height: 50px;
+
+	background-color: $dark-blue-spec;
+
+	@media (min-width: 768px) {
+		width: 20%;
+		height: 75px;
+		position: fixed;
+	}
 
 	.title {
-		line-height: 50px;
 		font-weight: bold;
-		width: 200px;
-		display: inline-block;
 		text-align: center;
+		color: #999999;
+		line-height: 50px;
+		width: 100%;
 
-		border-right: 1px solid $light-blue-spec;
+		@media (min-width: 768px) {
+			line-height: 75px;
+		}
+	}
+}
+
+.top-right {
+	display: none;
+
+	position: fixed;
+	width: 80%;
+	height: 75px;
+	left: 20%;
+
+	background-color: #DEDEDE;
+
+	@media (min-width: 768px) {
+		display: block;
+	}
+}
+
+.bottom-left {
+	width: 100%;
+	background-color: $dark-blue;
+
+	@media (min-width: 768px) {
+		position: fixed;
+		width: 20%;
+		height: calc(100% - 75px);
+		top: 75px;
+	}
+}
+
+.bottom-right {
+	width: 100%;
+	padding: 0 15px 15px 20px;
+
+	@media (min-width: 768px) {
+		position: fixed;
+		width: 80%;
+		height: calc(100% - 75px);
+		top: 75px;
+		left: 20%;
+
+		overflow: auto;
+	}
+}
+
+.crumbs {
+	display: none;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+	line-height: 35px;
+
+	@media(min-width: 768px) {
+		display: inline-block;
+	}
+
+	.breadcrumb {
+		background-color: transparent;
+		padding: 0;
+		margin: 0;
+		
+		li + li:before {
+			content: '|';
+		}
+	}
+}
+
+.profile {
+	display: none;
+	white-space: nowrap;
+
+	@media(min-width: 768px) {
+		display: inline-block;
+	}
+
+	.notifications, .messages, .user {
+		display: inline-block;
+		color: #777777;
+		position: relative;
+		line-height: 15px;
+	}
+
+	.notifications {
+		padding: 30px;
+	}
+
+	.messages {
+		padding: 30px;
 	}
 
 	.user {
-		margin-right: 0;
-		display: inline-block;
-		float: right;
-		color: $grey;
-		cursor: pointer;
+		margin-left: 20px;
+		margin-right: 10px;
+		img {
+			width: 60px;
+			border-radius: 100%;
+			padding-top: 8px;
+			padding-right: 5px;
+		}
+	}
+}
 
-		.news {
-			display: inline-block;
-			position: relative;
-			width: 50px;
-			border-left: 1px solid $light-blue-spec;
-			line-height: 50px;
-			text-align: center;
+.nav-title {
+	line-height: 50px;
+	padding-left: 20px;
+	color: $beige;
 
-			transition: color 0.3s linear;
+	.hamburger {
 
-			.number {
-				z-index: 3;
-				display: block;
-				line-height: 1;
-				width: 15px;
-				height: 15px;
-				bottom: 5px;
-				right: 5px;
-				position: absolute;
-				font-size: 8pt;
+		@media (min-width: 768px) {
+			display: none;
+		}
+
+		i {
+			font-size: 20px;
+			padding-left: 15px;
+			padding-right: 15px; 
+		}
+	}
+}
+
+#main-nav {
+	display: none;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
+	@media (min-width: 768px) {
+		display: block !important;
+	}
+
+	li {
+		a {
+			display: block;
+			width: 100%;
+			padding: 15px 0 15px 20px;
+			text-decoration: none;
+			border-right: 5px solid transparent;
+
+			&.selected {
+				background-color: $dark-blue-spec;
+				border-right: 5px solid $beige;
+				color: $beige;
 			}
+			&:hover {
+				background-color: $blue;
+				border-right: 5px solid $beige;
+				color: $beige;
+			}
+			span {
+				margin-left: 10px;
+			}
+		}
+	}
+}
+
+.number {
+	text-align: center;
+	z-index: 3;
+	display: block;
+	line-height: 15px;
+	width: 15px;
+	height: 15px;
+	bottom: 15px;
+	right: 15px;
+	position: absolute;
+	font-size: 8pt;
+	color: $beige;
+	background-color: $red;
+	border-radius: 100%;
+}
+
+.items {
+	display: none;
+	list-style-type: none;
+	padding: 0;
+	position: absolute;
+	z-index: 5;
+	top: 90px;
+	right: 0px;
+
+	background-color: $beige;
+
+	box-shadow: 2px 2px 4px 2px #AAAAAA;
+
+	li {
+	
+		a {
+			display: block;
+			min-width: 150px;
+			padding: 15px 20px 15px 10px;
+			text-decoration: none;
 
 			&:hover {
-				color: white;
-			}
-
-			img {
-				width: 40px;
-				height: 40px;
-				margin-right: 10px;
-			}
-		}
-
-		.profile {
-			width: 100px;
-			text-align: left;
-			padding-left: 5px;
-		}
-	}
-}
-
-.left-bar {
-	width: 200px;
-	min-height: 500px;
-	background-color: $blue;
-	color: $grey;
-
-	h4 {
-		margin: 0;
-		font-size: 10pt;
-		padding: 10px;
-		background-color: $blue-shadow;
-	}
-
-	ul {
-		padding: 0;
-		margin: 0;
-
-		li  {
-			list-style-type: none;
-
-			a {
-				display: inline-block;
-				text-decoration: none;
-				padding: 10px 10px 10px 20px;
-				width: 100%;
+				background-color: $blue;
+				color: $beige;
 			}
 		}
 	}
 }
 
-/**
- * Helpers
- */
-.center {
+.content {
+	padding: 20px;
+}
+
+/**------------------------------------------------------------**/
+/**---------------------Admin Common Stuff---------------------**/
+/**------------------------------------------------------------**/
+
+.page-navigator {
 	text-align: center;
+	margin: 10px 0 20px 0;
+}
+
+.check-center {
+	text-align: center;
+}
+
+.form {
+	padding: 0px 10px 10px 15px;
+	margin-bottom: 50px;
+	border: 1px solid #BBB;
+	border-radius: 10px;
+}
+
+.form-error {
+	font-weight: bold;
+	color: red;
+}
+
+.table-button {
+	white-space: nowrap;
+	width: 100%;		
+
+	span {
+		display: none;
+		margin-left: 10px;
+
+		@media(min-width: 992px) {
+			display: inline;
+		}
+	}
 }

@@ -50,10 +50,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function admin()
     {
-        //if ($this->isAdmin) {
-            return $this->hasOne('App\Admin');
-        //} else {
-        //    return null;
-        //}
+        return $this->hasOne('App\Admin');
     }
 }

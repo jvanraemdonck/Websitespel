@@ -11,11 +11,13 @@
 |
 */
 
-$factory->define(App\User::class, function ($faker) {
+$factory->define(App\Question::class, function ($faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => str_random(10),
-        'remember_token' => str_random(10),
+        'question' => $faker->paragraph(3),
+        'additional_info' => $faker->sentence(3),
+        'tip' => $faker->sentence(7),
+        'tip_alters_question' => $faker->boolean,
+        'question_type' => $faker->word,
+        'sequence' => $faker->numberBetween(0, 50)
     ];
 });

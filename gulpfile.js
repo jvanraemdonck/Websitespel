@@ -12,9 +12,16 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass([
+    	'font-awesome.scss',
+    	'app.scss'
+    ]);
     mix.scripts([
+    	'jquery.min.js',
     	'vue.min.js',
-    	'login.js'
+        'vue-resource.min.js',
+    	'login.js',
+        'customScrollbar.js',
+    	'admin.js'
     ]);
 });
