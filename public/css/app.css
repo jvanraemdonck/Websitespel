@@ -8008,9 +8008,6 @@ button.close {
     display: none !important; } }
 
 /**
- * colors
- */
-/**
  * Element Selectors
  */
 html, body {
@@ -8019,7 +8016,7 @@ html, body {
   overflow: none; }
 
 body {
-  background-color: #ECF0F1;
+  background-color: #EFEFEF;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif; }
@@ -8043,9 +8040,9 @@ body {
   border: none;
   height: 83px;
   padding: 0; }
-  .btn-login.red {
+  .btn-login--red {
     background-color: #E74C3C; }
-  .btn-login.green {
+  .btn-login--green {
     background-color: #2980B9; }
 
 /**------------------------------------------------------------**/
@@ -8072,11 +8069,13 @@ body {
 
 .top-right {
   display: none;
+  z-index: 998;
   position: fixed;
   width: 80%;
   height: 75px;
   left: 20%;
-  background-color: #DEDEDE; }
+  background-color: #DEDEDE;
+  box-shadow: 3px 3px 5px #CDCDCD; }
   @media (min-width: 768px) {
     .top-right {
       display: block; } }
@@ -8235,16 +8234,32 @@ body {
 
 .form-error {
   font-weight: bold;
-  color: red; }
+  color: #E74C3C; }
 
 .table-button {
   white-space: nowrap;
-  width: 100%; }
+  width: 100%;
+  max-width: 150px; }
+  @media (min-width: 992px) {
+    .table-button {
+      text-align: left; } }
   .table-button span {
     display: none;
     margin-left: 10px; }
     @media (min-width: 992px) {
       .table-button span {
         display: inline; } }
+
+.pointer {
+  cursor: pointer; }
+
+.btn {
+  margin-bottom: 5px; }
+
+.narrow-col {
+  max-width: 100px; }
+
+.red {
+  border-left: 3px solid #E74C3C; }
 
 /*# sourceMappingURL=app.css.map */

@@ -1,15 +1,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-/**
- * colors
- */
-$red: #E74C3C;
-$beige: #ECF0F1;
-$light-blue: #3498DB;
-$blue: #2980B9;
-$dark-blue: #2C3E50;
-$dark-blue-spec: #3D4F61;
-
+@import "colors";
 /**
  * Element Selectors
  */
@@ -21,7 +12,7 @@ html, body {
 }
 
 body {
-	background-color: $beige;
+	background-color: $grey;
 	margin: 0;
 	padding: 0;
 	font-family: 'Lato', sans-serif;
@@ -50,11 +41,11 @@ body {
 	height: 83px;
 	padding: 0;
 
-	&.red {
+	&--red {
 		background-color: $red;
 	}
 
-	&.green {
+	&--green {
 		background-color: $blue;
 	}
 }
@@ -91,12 +82,16 @@ body {
 .top-right {
 	display: none;
 
+	z-index: 998;
+
 	position: fixed;
 	width: 80%;
 	height: 75px;
 	left: 20%;
 
 	background-color: #DEDEDE;
+
+	box-shadow: 3px 3px 5px #CDCDCD;
 
 	@media (min-width: 768px) {
 		display: block;
@@ -312,12 +307,17 @@ body {
 
 .form-error {
 	font-weight: bold;
-	color: red;
+	color: $red;
 }
 
 .table-button {
 	white-space: nowrap;
-	width: 100%;		
+	width: 100%;
+	max-width: 150px;
+
+	@media(min-width: 992px) {
+		text-align: left;
+	}
 
 	span {
 		display: none;
@@ -327,4 +327,20 @@ body {
 			display: inline;
 		}
 	}
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.btn {
+	margin-bottom: 5px;
+}
+
+.narrow-col {
+	max-width: 100px;
+}
+
+.red {
+	border-left: 3px solid $red;
 }

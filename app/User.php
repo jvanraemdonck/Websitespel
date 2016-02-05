@@ -52,4 +52,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasOne('App\Admin');
     }
+
+    /**
+     * return the team object relates to the user is applicable
+     * 
+     * @return Team the team object
+     */
+    public function team()
+    {
+        return $this->hasOne('App\Team');
+    }
 }

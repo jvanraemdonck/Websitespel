@@ -28,8 +28,8 @@
 						<div class="form-group">
 							<button class="form-control btn-login"
 								v-class="
-									red: !allowed,
-									green: allowed">
+									btn-login--red: !allowed,
+									btn-login--green: allowed">
 								<span class="glyphicon glyphicon-lock" 
 									v-class="
 										glyphicon-lock: !allowed,
@@ -53,8 +53,8 @@
 					@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
 					@endforeach
-				</div>
-			</ul>
+				</ul>
+			</div>
 		@endif
 	</div>
 @endsection

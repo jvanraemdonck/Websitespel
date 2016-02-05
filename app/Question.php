@@ -31,7 +31,8 @@ class Question extends Model
      *
      * @return answers for this question
      */
-    public function answers() {
+    public function answers() 
+    {
     	return $this->hasmany('App\Answer');
     }
 
@@ -40,7 +41,8 @@ class Question extends Model
      * 
      * @return integer number of answers
      */
-    public function answersCount() {
+    public function answersCount() 
+    {
         return $this->hasmany('App\Answer')->count();
     }
 }

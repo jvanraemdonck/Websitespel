@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Auth;
+
 class AdminController extends Controller
 {
 
@@ -23,6 +25,7 @@ class AdminController extends Controller
 
     public function index()
     {
-    	return "admin index";
+    	$admin = Auth::user()->admin()->get();
+    	return view('admin.index')->with('admin', $admin);
     }
 }

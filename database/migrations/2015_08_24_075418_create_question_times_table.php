@@ -16,6 +16,7 @@ class CreateQuestionTimesTable extends Migration
             $table->increments('id');
             $table->integer('team_id');
             $table->integer('question_id');
+            $table->boolean('tip');
             $table->timestamp('start_time');
             $table->timestamp('end_time')->nullable();
             $table->timestamp('delta_time')->nullable();

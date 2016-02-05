@@ -18,10 +18,10 @@ elixir(function(mix) {
     ]);
     mix.scripts([
     	'jquery.min.js',
+        'modal.js',
     	'vue.min.js',
         'vue-resource.min.js',
     	'login.js',
-        'customScrollbar.js',
-    	'admin.js'
+        'customScrollbar.js'
     ]);
 });

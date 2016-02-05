@@ -11,6 +11,7 @@
 </head>
 <body>
 
+@yield('modals')
 
 	<div class="top-left">
 		<div class="title">
@@ -30,31 +31,17 @@
 			<div class="notifications has-sub">
 				<i class="fa fa-bell"></i>
 				<span class="number">7</span>
-				<ul class="items">
-					<li><a href="">item 1 en blabla</a></li>
-					<li><a href="">item 2</a></li>
-					<li><a href="">item 3</a></li>
-				</ul>
 			</div>
 
 			<div class="messages has-sub">
 				<i class="fa fa-envelope"></i>
 				<span class="number">4</span>
-				<ul class="items">
-					<li><a href="">item 1</a></li>
-					<li><a href="">item 2</a></li>
-					<li><a href="">item 3</a></li>
-				</ul>
 			</div>
 
 			<div class="user has-sub">
 				<img src="{{ $admin[0]->avatar }}" alt="avatar" />
 				<span>{{ explode(' ', $admin[0]->longname)[0] }}</span>
 				<ul class="items">
-					<li><a href="">item 1</a></li>
-					<li><a href="">item 2</a></li>
-					<li><a href="">item 3</a></li>
-				</ul>
 			</div>
 		</div>
 	</div>
@@ -68,31 +55,31 @@
 		</div>
 		<ul id="main-nav">
 			<li>
-				<a href="#">
+				<a href="/admin">
 					<i class="fa fa-tachometer"></i>
 					<span class="nav-text">Dashbord</span>
 				</a>
 			</li>
 			<li>
-				<a class="selected" href="#">
+				<a class="selected" href="/admin/questions">
 					<i class="fa fa-question"></i>
 					<span class="nav-text">Vragen</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="/admin/extra">
 					<i class="fa fa-question-circle"></i>
 					<span class="nav-text">Extra Tip-Vraag</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="/admin/teams">
 					<i class="fa fa-users"></i>
 					<span class="nav-text">Teams</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="/admin/admins">
 					<i class="fa fa-lock"></i>
 					<span class="nav-text">Administrators</span>
 				</a>

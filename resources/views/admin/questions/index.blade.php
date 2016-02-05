@@ -1,64 +1,16 @@
-@extends('admin-base', array('title' => 'HHDA -- Questions'))
+@extends('admin-base', array('title' => 'HHDA -- Vragen'))
 
 @section('crumbs')
-	<li><a href="#">Dashbord</a></li>
-	<li><a href="#">Questions</a></li>
-	<li class="active">Data</li>
+	<li><a href="/admin">Dashbord</a></li>
+	<li class="active">Vragen</li>
 @endsection
 
 @section('content')
 	<div id="questions">
 
-		<h1>Vragen
-			<button v-on="click: showCreateForm()" class="btn btn-primary">Nieuw</button>
-		</h1>
+		<h1>Vragen</h1>
+		<a class="btn btn-primary" href="/admin/questions/create">Nieuwe vraag</a>
 		<hr>
-		
-
-		<form method="POST" v-on="submit: saveQuestion" id="create" class="form">
-
-			<h3>Nieuwe vraag</h3>
-			<div class="form-group">
-				<label for="question">Vraag:
-					<span v-show="!newQuestion.question" class="form-error">*</span>
-				</label>
-				<input id="question" v-model="newQuestion.question" class="form-control" type="text">
-			</div>
-			<div class="form-group">
-				<label for="tip">Tip:
-					<span v-show="!newQuestion.tip" class="form-error">*</span>
-				</label>
-				<input id="tip" v-model='newQuestion.tip' class="form-control" type="text">
-			</div>
-			<div class="checkbox">
-				<label><input type="checkbox" v-model="newQuestion.tip_alters_question" id="taq">Tip veranderd de vraag</label>
-			</div>
-			<div class="form-group">
-				<label for="type">Type:</label>
-				<select id="type" v-model="newQuestion.question_type" class="form-control">
-					<option value="0">normal</option>
-					<option value="1">item 1</option>
-					<option value="2">item 2</option>
-					<option value="3">item 3</option>
-				</select>
-			</div>
-
-			<button type="submit" v-class="disabled: errors" v-attr="disabled: errors" class="btn btn-primary">Bewaar</button>
-			<button type="button" v-on="click: discardCreateForm()" class="btn btn-warning">Annuleer</button>
-		</form>
-
-		<div class="page-navigator">
-			<a class="btn btn-default" 
-				v-class="disabled: page == 1"
-				v-on="click: changePage(page-1, $event)">&lt;</a>
-			<a class="btn btn-default"
-				v-repeat="n in pages" 
-				v-on="click: changePage(n+1, $event)"
-				v-class="active: page == n+1">@{{ n+1 }}</a>
-			<a class="btn btn-default" 
-				v-class="disabled: page == pages"
-				v-on="click: changePage(page+1, $event)">&gt;</a>
-		</div>
 
 		<div class="form-group">
 			<input type="text" class="form-control" v-model="search" placeholder="Zoek vragen">
@@ -77,48 +29,65 @@
 			</thead>
 			<tbody>
 				<tr v-repeat="question in questions | filterBy search">
-					<td>@{{ question.sequence }}</td>
+					<td>
+						<i v-on="click: changeSequence(question, 'up', $event)" v-if="question.sequence > 1" class="fa fa-chevron-up pointer"></i><br>
+						&nbsp;@{{ question.sequence }}<br>
+						<i v-on="click: changeSequence(question, 'down', $event)" v-if="question.sequence < questionsCount" class="fa fa-chevron-down pointer"></i>
+					</td>
 					<td>@{{ question.question }}</td>
 					<td>@{{ question.tip }}</td>
 					<td>@{{ question.question_type }}</td>
-					<td>@{{ question.answersCount }}</td>
-					<td>
-						<button class="table-button btn btn-warning" v-on="click: editQuestion(question)">
+					<td v-class="red: question.answersCount == 0">@{{ question.answersCount }}</td>
+					<td class="narrow-col">
+						<a class="table-button btn btn-info" href="/admin/questions/@{{question.id}}">
+							<i class="fa fa-eye"></i>
+							<span>details</span>
+						</a>
+						<a class="table-button btn btn-warning" href="/admin/questions/@{{question.id}}/edit">
 							<i class="fa fa-pencil"></i>
-							<span>edit</span>
-						</button>
-						<button class="table-button btn btn-danger" v-on="click: overview(question)">
+							<span>bewerk</span>
+						</a>
+						<a class="table-button btn btn-danger" v-on="click: setCurrent(question, $event)" data-toggle="modal" data-target="#deleteModal">
 							<i class="fa fa-trash"></i>
-							<span>delete</span>
-						</button>
+							<span>verwijder</span>
+						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="page-navigator">
-			<a class="btn btn-default" 
-				v-class="disabled: page == 1"
-				v-on="click: changePage(page-1, $event)">&lt;</a>
-			<a class="btn btn-default"
-				v-repeat="n in pages" 
-				v-on="click: changePage(n+1, $event)"
-				v-class="active: page == n+1">@{{ n+1 }}</a>
-			<a class="btn btn-default" 
-				v-class="disabled: page == pages"
-				v-on="click: changePage(page+1, $event)">&gt;</a>
-		</div>
-
-		<button v-on="click: showCreateForm()" class="btn btn-primary center-block">Nieuw</button>
-
-		<!--pre>
-			@{{ $data | json }}
-		</pre-->
+		<a class="btn btn-primary" href="/admin/questions/create">Nieuwe vraag</a>
 	</div>
-
-	
 @endsection
 
 @section('scripts')
 	<script src="/js/all.js"></script>
+	<script src="/js/questions.js"></script>
+@endsection
+
+@section('modals')
+	<!-- Modal -->
+	<div id="deleteModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Deze vraag verwijderen?</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Ben je zeker dat je deze vraag wil verwijderen?</p>
+	      </div>
+	      <div class="modal-footer">
+	      	{!! Form::open(array('url' => '/admin/questions/@{{current.id}}', 'method' => 'DELETE')) !!}
+	      	<button class="btn btn-danger">Verwijderen</button>
+	      	<button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+	      	{!! Form::close() !!}
+	        
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
 @endsection
