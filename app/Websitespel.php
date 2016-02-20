@@ -22,4 +22,6 @@ class Websitespel extends Model
     	'start_date',
     	'ended'
 	];
+
+    protected $dates = ['start_date', 'created_at', 'updated_at'];
 }

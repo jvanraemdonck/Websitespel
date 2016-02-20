@@ -1,4 +1,4 @@
-@extends('admin-base', array('title' => 'HHDA -- index'))
+@extends('admin-base', array('title' => 'HHDA -- index', 'type' => 'Dashbord'))
 
 @section('crumbs')
 	<li class="active">Dashbord</li>
@@ -6,4 +6,8 @@
 
 @section('content')
 	HELLLOOOOO
+@endsection
+
+@section('scripts')
+	<script src="/js/all.js"></script>
 @endsection

@@ -1,9 +1,9 @@
-@extends('admin-base', array('title' => 'HHDA -- Bewerk vraag'))
+@extends('admin-base', array('title' => 'HHDA -- Bewerk vraag', 'type' => 'Vraag'))
 
 @section('crumbs')
 	<li><a href="/admin">Dashbord</a></li>
 	<li><a href="/admin/questions">Vragen</a></li>
-	<li class="active">Vraag {{$question->id}}</li>
+	<li class="active">Vraag {{$question->sequence}}</li>
 @endsection
 
 @section('content')

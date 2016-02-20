@@ -10,6 +10,7 @@ use Auth;
 use App\Progress;
 use App\Question;
 use App\QuestionTime;
+use App\Websitespel;
 use App\TeamAnswer;
 use App\Event;
 use App\Team;
@@ -33,6 +34,22 @@ class GameController extends Controller
      */
     public function index()
     {
+        $ws = Websitespel::where("ended", false)->orderBy('start_date')->first();
+
+        if ($ws == null) {
+            //no games in progress and none planned
+            //return done
+            return view('game.ended')->with('countDown', false);
+        }
+
+        else if ($ws->start_date > \Carbon\Carbon::now()) {
+            // do the countdown
+            // return countdown
+            return view('game.countdown')->with('countDown', $ws);
+        }
+
+        // else carry on
+
         $team = Auth::user()->team()->first();
         $questionNr = count(Progress::where('team_id', $team->id)->get());
 
@@ -68,15 +85,17 @@ class GameController extends Controller
                 if ($qt == null) continue;
                 $end_time = $qt->end_time;
                 if ($end_time == null) continue;
-                $end_time_string = \Carbon\Carbon::createFromTimestamp($end_time)->toDateTimeString();
+                $end_time_string = \Carbon\Carbon::createFromTimestamp($end_time);
 
-                array_push($times, array('name' => $teams[$i]->teamname, 'time' => $end_time_string));
+                array_push($times, array('name' => $teams[$i]->teamname, 'time' => $end_time_string, 'countDown' => 0));
             }
 
-            dd($times);
+            usort($times, function($a, $b) {
+                return $a['time']->timestamp - $b['time']->timestamp;
+            });
         }
 
-        return view('game.index')->with(array('question' => $question, 'tip' => $tip, 'end_times' => $times));
+        return view('game.index')->with(array('question' => $question, 'tip' => $tip, 'end_times' => $times, 'countDown', null));
     }
 
     /**
@@ -92,17 +111,29 @@ class GameController extends Controller
 
         // get the answer from the user from the input
         $answer = $request->input('answer');
+        $answer = trim($answer);
 
         // fetch the correct answers from the database
         $rightAnswers = $question->answers()->get();
         $answersCount = count($rightAnswers);
 
         $correct = false;
+        $errors = [];
+
+        if (strpos($answer, ' ') !== false) {
+            array_push($errors, "Je antwoord bevat één of meerdere spaties!");
+        }
+        if (strpbrk($answer, '1234567890') !== false) {
+            array_push($errors, "Je antwoord bevat één of meerdere cijfers!");
+        }
+        if (strpbrk($answer, '³²&é"\'(§è!çà-)$^*¨µù£%=:+/;,.?][`´~<>|@#^{}') !== false) {
+            array_push($errors, "Je antwoord bevat één of meerdere speciale tekens!");
+        }
 
         // check if the given answer was correct
         for ($i = 0; $i < $answersCount; $i++) 
         {
-            if (strcmp($rightAnswers[$i]->answer, $answer) == 0) {
+            if (strcmp(strtoupper($rightAnswers[$i]->answer), strtoupper($answer)) == 0) {
                 $correct = true;
             }
         }
@@ -139,7 +170,9 @@ class GameController extends Controller
         } 
         else // if not, it's a little easier...
         {
-            return redirect('/')->withErrors(['nope, try again']);
+            if (count($errors) > 0) array_push($errors, "<a href='#'>Kijk hier het reglement na</a>.");
+            array_unshift($errors, "Fout antwoord, probeer opnieuw.");
+            return redirect('/')->withErrors($errors);
         }
     }
 
@@ -155,5 +188,15 @@ class GameController extends Controller
         $qt->save();
 
         return redirect('/');
+    }
+
+    public function reglement() 
+    {
+        return view('game.reglement');
+    }
+
+    public function stand() 
+    {
+        return view('game.stand');
     }
 }

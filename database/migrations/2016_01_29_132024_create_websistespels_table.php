@@ -14,7 +14,7 @@ class CreateWebsistespelsTable extends Migration
     {
         Schema::create('websitespellen', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('start_date');
+            $table->dateTime('start_date');
             $table->boolean('ended');
             $table->timestamps();
         });

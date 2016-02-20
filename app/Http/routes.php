@@ -6,6 +6,8 @@
 Route::get('/', 'GameController@index');
 Route::post('/', 'GameController@answer');
 Route::post('/tip', 'GameController@tip');
+Route::get('/reglement', 'GameController@reglement');
+Route::get('/stand', 'GameController@stand');
 
 /**
  * Authentication routes

@@ -2,8 +2,10 @@
 
 @section('content')
 	@if ($question != null)
+		<label>Vraag:</label>
 		<div>{!! $question->question !!}</div>
 		@if ($tip)
+			<label>Tip:</label>
 			<div>{!! $question->tip !!}</div>
 		@endif
 
@@ -11,25 +13,31 @@
 		{!! Form::open(array('method' => 'POST', 'url' => '/')) !!}
 			<div class="form-group">
 				<label for="answer">Antwoord: </label>
-				<input type="text" class="form-control" id="answer" name="answer"/>
+				<input type="text" class="form-control" style="text-transform: uppercase;" id="answer" name="answer"/>
 			</div>
-			<input type="submit" class="form-control"/>
+			<input type="submit" class="btn" value="Proberen" class="form-control"/>
 		{!! Form::close() !!}
 		
 		@if(! $tip)
-		<a class="btn btn-danger" data-toggle="modal" data-target="#tipModal">Geef een tip!</a>
+		<a style="margin-top: 20px;" class="btn btn-danger" data-toggle="modal" data-target="#tipModal">Geef een tip!</a>
 		@endif
 
 		@if ($errors->any())
 			<div class="alert alert-danger" role="alert">
+				<ul>
 				@foreach ($errors->all() as $error)
-					<p>{{ $error }}</p>
+					<li>{!! $error !!}</li>
 				@endforeach
+				</ul>
 			</div>
 		@endif
 	@else
 		<p>klaar met het spel</p>
-		<p>{{$end_time}}</p>
+		<ol>
+		@foreach ($end_times as $time)
+			<li>{{$time['name']}}:&emsp; {{$time['time']}}</li>
+		@endforeach
+		</ol>
 	@endif
 @endsection
 

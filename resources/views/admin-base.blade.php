@@ -55,31 +55,31 @@
 		</div>
 		<ul id="main-nav">
 			<li>
-				<a href="/admin">
+				<a <?php if ($type==='Dashbord') echo 'class="selected"'; ?> href="/admin">
 					<i class="fa fa-tachometer"></i>
 					<span class="nav-text">Dashbord</span>
 				</a>
 			</li>
 			<li>
-				<a class="selected" href="/admin/questions">
+				<a <?php if ($type==='Vraag') echo 'class="selected"'; ?> href="/admin/questions">
 					<i class="fa fa-question"></i>
 					<span class="nav-text">Vragen</span>
 				</a>
 			</li>
 			<li>
-				<a href="/admin/extra">
+				<a <?php if ($type==='Extra') echo 'class="selected"'; ?> href="/admin/extra">
 					<i class="fa fa-question-circle"></i>
 					<span class="nav-text">Extra Tip-Vraag</span>
 				</a>
 			</li>
 			<li>
-				<a href="/admin/teams">
+				<a <?php if ($type==='Team') echo 'class="selected"'; ?> href="/admin/teams">
 					<i class="fa fa-users"></i>
 					<span class="nav-text">Teams</span>
 				</a>
 			</li>
 			<li>
-				<a href="/admin/admins">
+				<a <?php if ($type==='Admin') echo 'class="selected"'; ?> href="/admin/admins">
 					<i class="fa fa-lock"></i>
 					<span class="nav-text">Administrators</span>
 				</a>

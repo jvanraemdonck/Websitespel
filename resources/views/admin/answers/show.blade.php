@@ -1,4 +1,4 @@
-@extends('admin-base', array('title' => 'HHDA -- Bewerk antwoord'))
+@extends('admin-base', array('title' => 'HHDA -- Bewerk antwoord', 'type' => 'Antwoord'))
 
 @section('crumbs')
 	<li><a href="/admin">Dashbord</a></li>

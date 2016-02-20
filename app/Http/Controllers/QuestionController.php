@@ -167,6 +167,12 @@ class QuestionController extends Controller
      */
     public function destroy(Request $request, $id) {
         $question = Question::findOrFail($id);
+
+        $answers = $question->answers;
+        foreach ($answers as $answer) {
+            $answer->delete();
+        }
+
         $seq = $question->sequence;
         $question->delete();
 
